@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:apps-hub/tmaps-api.git"
+    "url": "skanderbenali/elasticsearch-postgresql-data-indexer"
   },
   "license": "TMaps"
 }
