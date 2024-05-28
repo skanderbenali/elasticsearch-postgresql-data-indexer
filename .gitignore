@@ -91,3 +91,4 @@ sw.*
 build
 docker_cach*
 package-lock.json
+app.env
