@@ -1,69 +1,151 @@
-# data-analysis
+# Elasticsearch PostgreSQL Data Indexer
 
-## Build Setup
+## Overview
 
-```bash
-# install dependencies
-$ npm install
+`elasticsearch-postgresql-data-indexer` is a Node.js application that parses data from a PostgreSQL table and indexes it into an Elasticsearch index. This tool is useful for synchronizing data between a PostgreSQL database and Elasticsearch, enabling efficient search capabilities on the data.
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Features
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+- Parses data from a specified PostgreSQL table
+- Indexes data into an Elasticsearch index
+- Built with TypeScript for type safety
+- Uses Express.js for routing
+- Includes a route to trigger the indexing process
 
-# generate static project
-$ npm run generate
-```
+## Prerequisites
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+- Node.js (v14.x or later)
+- PostgreSQL database
+- Elasticsearch (v7.x or later)
 
-## Special Directories
+## Installation
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+1. Clone the repository:
 
-### `assets`
+    ```sh
+    git clone https://github.com/skanderbenali/elasticsearch-postgresql-data-indexer.git
+    cd elasticsearch-postgresql-data-indexer
+    ```
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+2. Install the dependencies:
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+    ```sh
+    npm install
+    ```
 
-### `components`
+3. Create an `app.env` file in the root of the project with the following content:
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+    ```env
+    PORT=3000
+    DB_USER=postgres
+    DB=database
+    DB_PASS=password
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_MAX_CLIENTS=20
+    DB_IDLE_TIMEOUT_MS=30000
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+    ELK_HOST=https://localhost:9200
+    ELK_PORT=9200
+    ELK_USERNAME=elastic
+    ELK_PASSWORD=password
+    ELK_INDEX=indexname
+    ELK_CA_FILE_PATH=ca_path
+    ```
 
-### `layouts`
+4. Create a `.env` file in the root of the project with the following content:
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+    ```env
+    ########################################
+    #############ELK VARS###################
+    ########################################
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+    # Version of Elastic products
+    STACK_VERSION=
 
+    # Set to 'basic' or 'trial' to automatically start the 30-day trial
+    LICENSE=
 
-### `pages`
+    # Password for the 'elastic' user (at least 6 characters)
+    ELASTIC_PASSWORD=
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+    # Password for the 'kibana_system' user (at least 6 characters)
+    KIBANA_PASSWORD=
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
+    # Set the cluster name
+    CLUSTER_NAME=
 
-### `plugins`
+    # Increase or decrease based on the available host memory (in bytes)
+    MEM_LIMIT=
 
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
+    # Log
+    ES_LOG_LEVEL=
+    ```
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
+## Usage
 
-### `static`
+1. Build the project:
 
-This directory contains your static files. Each file inside this directory is mapped to `/`.
+    ```sh
+    npm run build
+    ```
 
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
+2. Start the application:
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
+    ```sh
+    npm start
+    ```
 
-### `store`
+3. Use the `/indexData` route to trigger the indexing process. For example, if you are running the application locally, you can trigger the route using curl or a web browser:
 
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
+    ```sh
+    curl http://localhost:3000/indexData
+    ```
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+## Project Structure
+
+- `src/`: Source code for the application
+- `build/`: Compiled JavaScript files
+- `package.json`: Project metadata and dependencies
+- `app.env`: Application environment configuration
+- `.env`: Environment configuration for Elasticsearch stack
+- `.gitignore`: Specifies which files and directories to ignore in the repository
+
+## Scripts
+
+- `npm run build`: Compiles the TypeScript code into JavaScript
+- `npm run lint`: Runs ESLint to check for code quality issues
+- `npm run start`: Lints the code, compiles the TypeScript, and starts the application
+- `npm run test`: Runs tests using Jest and outputs a coverage report
+
+## Dependencies
+
+- `@elastic/elasticsearch`: Elasticsearch client for Node.js
+- `async`: Utility module for asynchronous programming
+- `body-parser`: Middleware for parsing JSON and URL-encoded request bodies
+- `compromise`: Natural language processing library
+- `dotenv`: Loads environment variables from a .env file
+- `express`: Web framework for Node.js
+- `ioredis`: Redis client for Node.js
+- `pg`: PostgreSQL client for Node.js
+- `pg-promise`: Promises-based PostgreSQL client for Node.js
+- `winston`: Logging library
+
+## Development Dependencies
+
+- `@types/...`: TypeScript definitions for various modules
+- `@typescript-eslint/...`: ESLint plugin and parser for TypeScript
+- `eslint`: JavaScript linter
+- `jest`: Testing framework
+- `prettier`: Code formatter
+- `ts-jest`: Jest transformer for TypeScript
+- `ts-node`: TypeScript execution environment for Node.js
+- `typescript`: TypeScript compiler
+
+## License
+
+This project is licensed under the SkanderBenali License.
+
+## Author
+
+Skander Benali
